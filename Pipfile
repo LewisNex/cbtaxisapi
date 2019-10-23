@@ -19,6 +19,7 @@ python-dotenv = "*"
 pusher = "*"
 gunicorn = "*"
 flask-script = "*"
+psycopg2 = "*"
 
 [requires]
 python_version = "3.6"
