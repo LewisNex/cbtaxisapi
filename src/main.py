@@ -15,12 +15,10 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 app.config['ADMIN_EMAIL'] = os.environ.get("ADMIN_EMAIL")
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or 'sqlite:///' + os.path.join(basedir, 'db.sqlite')
-print('USING DATABASE: ' + os.environ.get('DATABASE_URL'))
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 app.config['ENV'] = os.environ.get('ENV', default='DEV')
 app.config['DEV'] = app.config['ENV'] == 'DEV'
-# app.config['DEV'] = app.config['ENV'] == False
 
 app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER')
 app.config['MAIL_PORT'] = os.environ.get('MAIL_PORT')

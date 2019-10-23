@@ -79,9 +79,8 @@ def create_user():
             f'Confirm User: {user.username}',
             recipients=[app.config['ADMIN_EMAIL']],
             html = render_template('confirm_email.html', 
-            confirm_url=confirm_url),
-            sender='system@CBTaxis.com'
-        )
+                confirm_url=confirm_url),   
+                sender='system@CBTaxis.com')
         mail.send(msg)
 
     return user_schema.jsonify(user)
