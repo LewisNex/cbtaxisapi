@@ -7,29 +7,25 @@ from flask_mail import Mail
 
 import os
 
-from environs import Env
-env = Env()
-env.read_env()
-
 # Init app
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-app.config['SECRET_KEY'] = env.str('SECRET_KEY')
-app.config['ADMIN_EMAIL'] = env.str("ADMIN_EMAIL")
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+app.config['ADMIN_EMAIL'] = os.environ.get("ADMIN_EMAIL")
 
-app.config['SQLALCHEMY_DATABASE_URI'] = env.str('DATABASE_URL', default='sqlite:///' + os.path.join(basedir, 'db.sqlite'))
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or 'sqlite:///' + os.path.join(basedir, 'db.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-app.config['ENV'] = env.str('ENV', default='DEV')
+app.config['ENV'] = os.environ.get('ENV', default='DEV')
 app.config['DEV'] = app.config['ENV'] == 'DEV'
 # app.config['DEV'] = app.config['ENV'] == False
 
-app.config['MAIL_SERVER'] = env.str('MAIL_SERVER')
-app.config['MAIL_PORT'] = env.str('MAIL_PORT')
+app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER')
+app.config['MAIL_PORT'] = os.environ.get('MAIL_PORT')
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = env.str('MAIL_USERNAME')
-app.config['MAIL_PASSWORD'] = env.str('MAIL_PASSWORD')
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
