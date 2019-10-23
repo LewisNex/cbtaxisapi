@@ -203,7 +203,7 @@ def delete_job(id):
     job = Job.get_by_public_id(id)
     if job:
         job.delete()
-        channels_client.trigger('job-channel', 'deleted-job', job_schema.jsonify(job))
+        channels_client.trigger('job-channel', 'deleted-job', {'public_id': id})
         return jsonify({'Success': "Job has been deleted"}), 200
     else:
         return jsonify({'Error': "Job not found"}), 406
