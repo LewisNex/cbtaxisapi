@@ -72,8 +72,8 @@ def reference_col(tablename, nullable=False, pk_name="id", foreign_key_kwargs=No
 
 class User(CRUDModel):
     __tablename__ = "users"
-    username = db.Column(db.String(64))
-    email = db.Column(db.String(128))
+    username = db.Column(db.String(64), unique=True)
+    email = db.Column(db.String(128) , unique=True)
     password_hash = db.Column(db.Binary(128))
     last_active = db.Column(db.DateTime, default=datetime.utcnow)
     jobs = db.relationship('Job', backref='driver', lazy='dynamic')

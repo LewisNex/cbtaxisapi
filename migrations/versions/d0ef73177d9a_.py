@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 74c10b2152eb
+Revision ID: d0ef73177d9a
 Revises: 
-Create Date: 2019-10-19 17:55:28.200826
+Create Date: 2019-10-23 17:58:27.825593
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '74c10b2152eb'
+revision = 'd0ef73177d9a'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -27,7 +27,9 @@ def upgrade():
     sa.Column('last_active', sa.DateTime(), nullable=True),
     sa.Column('avatar_hash', sa.String(length=128), nullable=True),
     sa.Column('confirmed', sa.Boolean(), nullable=True),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('email'),
+    sa.UniqueConstraint('username')
     )
     op.create_table('jobs',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -40,6 +42,14 @@ def upgrade():
     sa.Column('price', sa.Integer(), nullable=True),
     sa.Column('is_complete', sa.Boolean(), nullable=True),
     sa.Column('_driver_id', sa.Integer(), nullable=True),
+    sa.Column('pickup_house', sa.String(length=64), nullable=True),
+    sa.Column('pickup_road', sa.String(length=64), nullable=True),
+    sa.Column('pickup_village', sa.String(length=64), nullable=True),
+    sa.Column('pickup_postcode', sa.String(length=64), nullable=True),
+    sa.Column('dropoff_house', sa.String(length=64), nullable=True),
+    sa.Column('dropoff_road', sa.String(length=64), nullable=True),
+    sa.Column('dropoff_village', sa.String(length=64), nullable=True),
+    sa.Column('dropoff_postcode', sa.String(length=64), nullable=True),
     sa.ForeignKeyConstraint(['_driver_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
