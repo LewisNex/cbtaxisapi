@@ -18,7 +18,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SECRET_KEY'] = env.str('SECRET_KEY')
 app.config['ADMIN_EMAIL'] = env.str("ADMIN_EMAIL")
 
-app.config['SQLALCHEMY_DATABASE_URI'] = env.str('DATABASE_URI', default='sqlite:///' + os.path.join(basedir, 'db.sqlite'))
+app.config['SQLALCHEMY_DATABASE_URI'] = env.str('DATABASE_URL', default='sqlite:///' + os.path.join(basedir, 'db.sqlite'))
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 app.config['ENV'] = env.str('ENV', default='DEV')
