@@ -61,7 +61,7 @@ def create_user():
         return jsonify({'Error': 'Email Required'}), 411
     if 'password' not in json.keys():
         return jsonify({'Error': 'Password Required'}), 412
-    if app.config['ENV'] == 'development':
+    if app.config['DEVELOPMENT']:
         confirmed = True
     else:
         confirmed = False
@@ -71,7 +71,7 @@ def create_user():
     password = json['password']
     user = User.create(username=username, email=email, password=password, confirmed=confirmed)
     
-    if not app.config['TESTING']:
+    if not app.config['DEVELOPMENT']:
         token = jwt.encode({'public_id': user.public_id,
                             'email': user.email}, 
                             app.config['SECRET_KEY'])
