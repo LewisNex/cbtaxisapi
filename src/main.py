@@ -9,22 +9,7 @@ import os
 
 # Init app
 app = Flask(__name__)
-basedir = os.path.abspath(os.path.dirname(__file__))
-
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
-app.config['ADMIN_EMAIL'] = os.environ.get("ADMIN_EMAIL")
-
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or 'sqlite:///' + os.path.join(basedir, 'db.sqlite')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-app.config['ENV'] = os.environ.get('ENV', default='DEV')
-app.config['DEV'] = app.config['ENV'] == 'DEV'
-
-app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER')
-app.config['MAIL_PORT'] = os.environ.get('MAIL_PORT')
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+app.config.from_object(os.environ.get('env') or 'src.config.Development')
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)

@@ -4,6 +4,7 @@ from functools import wraps
 import jwt
 from flask_mail import Message
 import pusher
+
 from .main import app, mail
 from .models import User, UserSchema, Job, JobSchema
 
@@ -60,7 +61,7 @@ def create_user():
         return jsonify({'Error': 'Email Required'}), 411
     if 'password' not in json.keys():
         return jsonify({'Error': 'Password Required'}), 412
-    if app.config['DEV']:
+    if app.config['ENV'] == 'development':
         confirmed = True
     else:
         confirmed = False
@@ -70,14 +71,14 @@ def create_user():
     password = json['password']
     user = User.create(username=username, email=email, password=password, confirmed=confirmed)
     
-    if not app.config['DEV']:
+    if not app.config['TESTING']:
         token = jwt.encode({'public_id': user.public_id,
                             'email': user.email}, 
                             app.config['SECRET_KEY'])
         confirm_url = url_for('.confirm', token=token, _external=True)
         msg = Message(
             f'Confirm User: {user.username}',
-            recipients=[app.config['ADMIN_EMAIL']],
+            recipients=[app.config['MAIL_USERNAME']],
             html = render_template('confirm_email.html', 
                 confirm_url=confirm_url),   
                 sender='system@CBTaxis.com')
