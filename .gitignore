@@ -1,0 +1,4 @@
+.vscode/
+*.sqlite
+.env
+Pipfile.lock

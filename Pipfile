@@ -1,0 +1,24 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+flask = "*"
+flask-sqlalchemy = "*"
+flask-marshmallow = "*"
+marshmallow-sqlalchemy = "*"
+flask-migrate = "*"
+flask-bcrypt = "*"
+environs = "*"
+pyjwt = "*"
+flask-mail = "*"
+python-dotenv = "*"
+pusher = "*"
+gunicorn = "*"
+flask-script = "*"
+
+[requires]
+python_version = "3.6"
